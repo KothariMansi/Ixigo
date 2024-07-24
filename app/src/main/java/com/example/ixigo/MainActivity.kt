@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,7 +17,11 @@ import com.example.ixigo.ui.ixigoMoney.IxigoScreen
 import com.example.ixigo.ui.profile.ProfileScreen
 import com.example.ixigo.ui.train.TrainScreen
 import com.example.ixigo.ui.theme.IxigoTheme
+import com.example.ixigo.ui.train.TrainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +45,12 @@ enum class DestinationsScreen{
     TRIPS,
     CONTACT_US,
     PROFILE,
-    TRAINS
 }
 
 @Composable
 fun IxigoApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = DestinationsScreen.TRAINS.name) {
-        composable(DestinationsScreen.TRAINS.name){
-            TrainScreen(navController)
-        }
+    NavHost(navController = navController, startDestination = DestinationsScreen.HOME.name) {
         composable(DestinationsScreen.HOME.name){
             TrainScreen(navController)
         }

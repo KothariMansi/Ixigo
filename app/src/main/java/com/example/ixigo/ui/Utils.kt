@@ -97,7 +97,7 @@ fun BottomBar(
 @Preview
 fun TopBarPreview() {
     IxigoTheme {
-        TopBar(name = "TExt")
+        TopBar(name = "Text")
     }
 }
 
