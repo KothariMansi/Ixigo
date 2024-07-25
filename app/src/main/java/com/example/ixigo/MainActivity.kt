@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ixigo.ui.ixigoMoney.IxigoScreen
 import com.example.ixigo.ui.profile.ProfileScreen
+import com.example.ixigo.ui.search.SearchScreen
 import com.example.ixigo.ui.train.TrainScreen
 import com.example.ixigo.ui.theme.IxigoTheme
 import com.example.ixigo.ui.train.TrainViewModel
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
 enum class DestinationsScreen{
     HOME,
     IXIGO_MONEY,
+    SEARCH,
     TRIPS,
     CONTACT_US,
     PROFILE,
@@ -60,6 +62,7 @@ fun IxigoApp() {
         composable(DestinationsScreen.PROFILE.name){
             ProfileScreen(navController)
         }
+
 
     }
 }

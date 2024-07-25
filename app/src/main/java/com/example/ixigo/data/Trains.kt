@@ -23,3 +23,8 @@ data class AboutTrain(
     val avgSpeed: String,
     val maxSpeedString: String,
 )
+
+data class Platform(
+    val stationCode: String,
+    val station: String
+)
