@@ -8,19 +8,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.ixigo.data.TrainSearch
 import com.example.ixigo.ui.ixigoMoney.IxigoScreen
 import com.example.ixigo.ui.profile.ProfileScreen
-import com.example.ixigo.ui.search.SearchScreen
-import com.example.ixigo.ui.train.TrainScreen
 import com.example.ixigo.ui.theme.IxigoTheme
-import com.example.ixigo.ui.train.TrainViewModel
+import com.example.ixigo.ui.train.TrainScreen
+import com.example.ixigo.ui.trainsBySearch.TrainsBySearchScreen
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -43,10 +43,10 @@ class MainActivity : ComponentActivity() {
 enum class DestinationsScreen{
     HOME,
     IXIGO_MONEY,
-    SEARCH,
     TRIPS,
     CONTACT_US,
     PROFILE,
+    TRAIN
 }
 
 @Composable
@@ -62,7 +62,14 @@ fun IxigoApp() {
         composable(DestinationsScreen.PROFILE.name){
             ProfileScreen(navController)
         }
-
+        composable(
+            route = DestinationsScreen.TRAIN.name + "/{trainSearch}",
+            arguments = listOf(navArgument("trainSearch") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val trainSearchJson = backStackEntry.arguments?.getString("trainSearch")
+            val trainSearch = trainSearchJson?.let { Json.decodeFromString<TrainSearch>(it) }
+            TrainsBySearchScreen(navController, trainSearch)
+        }
 
     }
 }

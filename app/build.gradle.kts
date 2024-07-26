@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id( "org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -68,6 +69,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Material 3
+    implementation("com.google.android.material:material:1.12.0")
+
+    // Json ser
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     // Hilt dependencies
     implementation( "com.google.dagger:hilt-android:2.51.1")

@@ -1,5 +1,7 @@
 package com.example.ixigo.data
 
+import kotlinx.serialization.Serializable
+
 data class Train(
     val trainBase: TrainBase,
     val aboutTrain: AboutTrain,
@@ -12,6 +14,7 @@ data class TrainBase(
     val trainSearch: TrainSearch
 )
 
+@Serializable
 data class TrainSearch(
     val arrival: String,
     val departure: String,

@@ -1,12 +1,9 @@
 package com.example.ixigo.ui.train
 
 import androidx.lifecycle.ViewModel
-import com.example.ixigo.data.Train
-import com.example.ixigo.repository.TrainRepository
 import com.example.ixigo.repository.TrainSearchRepository
 import com.example.ixigo.ui.search.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -14,16 +11,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class TrainViewModel @Inject constructor(
-    trainRepository: TrainRepository,
-    trainSearchRepository: TrainSearchRepository,
+    platFormSearchRepository: TrainSearchRepository,
     ): ViewModel() {
 
     val _uiState = MutableStateFlow(TrainState())
     var uiState = _uiState.asStateFlow()
-    val trains: Flow<List<Train>> = trainRepository.getAllTrains()
     private val _searchUiState = MutableStateFlow(SearchState())
     var searchUiState = _searchUiState.asStateFlow()
-    private val platform = trainSearchRepository.getPlatform()
+    private val platform = platFormSearchRepository.getPlatform()
 
     init {
         _searchUiState.update {
@@ -33,14 +28,16 @@ open class TrainViewModel @Inject constructor(
         }
     }
 
-
-    fun updateIsArrivalIDeparture(isArrival: Boolean,
-                                  isDeparture: Boolean
+    fun updateIsArrivalIDepartureIsDate(
+        isArrival: Boolean = false,
+        isDeparture: Boolean = false,
+        isDateSelected: Boolean = false
     ) {
         _uiState.update {
             it.copy(
                 isArrival = isArrival,
-                isDeparture = isDeparture
+                isDeparture = isDeparture,
+                isDateSelected = isDateSelected
             )
         }
     }
@@ -62,8 +59,7 @@ open class TrainViewModel @Inject constructor(
                 departure = departure,
                 isArrival = false,
                 isDeparture = false
-            )
-            }
+            ) }
         }
     }
 
@@ -75,13 +71,19 @@ open class TrainViewModel @Inject constructor(
             )
         }
     }
+
+    fun updatingCalender(selectedDateText: String) {
+        _uiState.update { it.copy(
+            selectedDateText = selectedDateText
+        ) }
+    }
 }
 
 data class TrainState(
     val arrival: String = "arrival",
     val departure: String = "departure",
-    val date: String = "",
     val isArrival: Boolean = false,
-    val isDeparture: Boolean = false
-    // val trains: Flow<List<Train>> = flowOf()
+    val isDeparture: Boolean = false,
+    val isDateSelected: Boolean = false,
+    val selectedDateText: String = "Date",
 )

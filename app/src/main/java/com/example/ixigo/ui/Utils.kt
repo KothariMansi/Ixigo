@@ -1,5 +1,6 @@
 package com.example.ixigo.ui
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.ixigo.DestinationsScreen
 import com.example.ixigo.R
+import com.example.ixigo.data.TrainSearch
 import com.example.ixigo.ui.theme.IxigoTheme
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,6 +95,11 @@ fun BottomBar(
             )
         }
     }
+}
+
+fun navigateToSearch(navController: NavController, trainSearch: TrainSearch) {
+    val trainSearchJson = Json.encodeToString(trainSearch)
+    navController.navigate(DestinationsScreen.TRAIN.name + "/${Uri.encode(trainSearchJson)}")
 }
 
 @Composable
