@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ixigo</string>
+    <string name="train">Train</string>
+    <string name="running_status">Running Status</string>
+    <string name="where_s_my_train">Where\'s my train?</string>
+    <string name="pnr_status">PNR Status</string>
+    <string name="where_s_my_trip_status">Where\'s my trip status?</string>
+    <string name="search_trains">Search Trains</string>
 </resources>

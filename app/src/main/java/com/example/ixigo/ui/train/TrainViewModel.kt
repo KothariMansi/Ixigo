@@ -77,6 +77,12 @@ open class TrainViewModel @Inject constructor(
             selectedDateText = selectedDateText
         ) }
     }
+
+    fun updateSearch(search: String) {
+        _searchUiState.update { it.copy(
+            search = search
+        ) }
+    }
 }
 
 data class TrainState(
