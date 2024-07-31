@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 data class Train(
     val trainBase: TrainBase,
+    val trainNum: Long,
     val aboutTrain: AboutTrain,
     val availability: String,
     val timeTaken: Long

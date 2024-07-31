@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.flowOf
 data class SearchState(
     val search: String = "",
     val platforms: Flow<List<Platform>> = flowOf(),
+    val filteredPlatform: Flow<List<Platform>> = flowOf()
 )

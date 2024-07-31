@@ -41,7 +41,7 @@ fun SearchScreen(
     viewModel: TrainViewModel,
     ) {
     val state by viewModel.searchUiState.collectAsState()
-    val platform = state.platforms.collectAsState(initial = emptyList()).value
+    val platform = state.filteredPlatform.collectAsState(initial = emptyList()).value
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,10 +65,10 @@ fun SearchScreen(
                     }
                     .padding(top = 16.dp)
             )
-            //Spacer(modifier = Modifier.padding(8.dp))
             OutlinedTextField(
                 shape = RoundedCornerShape(50.dp),
-                value = state.search, onValueChange = {},
+                value = state.search,
+                onValueChange = {viewModel.updateSearch(it)},
                 modifier = Modifier.width(350.dp)
             )
         }
@@ -114,7 +114,6 @@ fun SearchItem(
             text = platform.station, style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
         )
-
     }
 }
 

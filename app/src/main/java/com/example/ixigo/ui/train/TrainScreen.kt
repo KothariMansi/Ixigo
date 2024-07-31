@@ -255,7 +255,8 @@ fun TrainScreen(
                     Card(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(4.dp),
+                            .padding(4.dp)
+                            .clickable {  },
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = Color.Black
@@ -273,7 +274,8 @@ fun TrainScreen(
                     Card(
                         modifier = Modifier
                             .padding(4.dp)
-                            .weight(1f),
+                            .weight(1f)
+                            .clickable {  },
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = Color.Black

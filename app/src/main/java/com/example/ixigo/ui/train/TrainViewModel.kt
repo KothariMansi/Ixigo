@@ -1,12 +1,17 @@
 package com.example.ixigo.ui.train
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.ixigo.repository.TrainSearchRepository
 import com.example.ixigo.ui.search.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,7 +19,7 @@ open class TrainViewModel @Inject constructor(
     platFormSearchRepository: TrainSearchRepository,
     ): ViewModel() {
 
-    val _uiState = MutableStateFlow(TrainState())
+    private val _uiState = MutableStateFlow(TrainState())
     var uiState = _uiState.asStateFlow()
     private val _searchUiState = MutableStateFlow(SearchState())
     var searchUiState = _searchUiState.asStateFlow()
@@ -23,7 +28,8 @@ open class TrainViewModel @Inject constructor(
     init {
         _searchUiState.update {
             it.copy(
-                platforms = platform
+                platforms = platform,
+                filteredPlatform = platform
             )
         }
     }
@@ -78,10 +84,21 @@ open class TrainViewModel @Inject constructor(
         ) }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun updateSearch(search: String) {
         _searchUiState.update { it.copy(
-            search = search
+            search = search,
         ) }
+        viewModelScope.launch {
+            val filtered = _searchUiState.value.platforms.flatMapLatest {platform ->
+                flowOf(platform.filter {
+                    it.station.contains(search, ignoreCase = true) || it.stationCode.contains(search, ignoreCase = true)
+                })
+            }
+            _searchUiState.update { it.copy(
+                filteredPlatform = filtered
+            ) }
+        }
     }
 }
 
